@@ -101,7 +101,6 @@ public class App {
 
      //fibonacci recursivo
     static int codigo4(int n) {
-        operacoes = 0;
         if (n <= 2){
             operacoes++;
             return 1;
@@ -140,10 +139,16 @@ public class App {
             vetor.length, operacoes, duracao);
     }
     public static void main(String[] args) {
-        int[] tamanhosTeste = tamanhosTesteMedio;
+        int[] tamanhosTeste = tamanhosTestePequeno;
         for(int i = 0; i < tamanhosTeste.length; i++){
-            int[] vetorDados = gerarVetor(tamanhosTeste[i]);
-            System.out.println(executarTeste(vetorDados));
+            long inicio = System.nanoTime();
+            codigo4(tamanhosTeste[i]);
+            duracao = (System.nanoTime() - inicio) * nanoToMilli;
+            System.out.println( String.format("Tamanho: %,2d | Operações: %,2d | Tempo: %,2f ms",
+           tamanhosTeste[i], operacoes, duracao));
+
+            //int[] vetorDados = gerarVetor(tamanhosTeste[i]);
+          //  System.out.println(executarTeste(vetorDados));
         }
     }
 }

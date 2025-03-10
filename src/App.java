@@ -32,16 +32,22 @@ public class App {
     static Random aleatorio = new Random(42);
     static long operacoes;
     static double nanoToMilli = 1.0/1_000_000;
+    static double duracao;
 
     /**
      * Código de teste 1. Este método...
      * @param vetor Vetor com dados para teste.
      * @return Uma resposta que significa....
      */
+
+     //contador de números ímpares
     static int codigo1(int[] vetor) {
         int resposta = 0;
+        operacoes = 0;
         for (int i = 0; i < vetor.length; i += 2) {
-            resposta += vetor[i]%2;
+            operacoes +=4;
+            resposta += vetor[i]%2; //estão ocorrendo 4 operações aqui
+            //uma atribuição "=", uma soma "+", uma leitura vetor[i], e uma divisão %2
         }
         return resposta;
     }
@@ -51,6 +57,9 @@ public class App {
      * @param vetor Vetor com dados para teste.
      * @return Uma resposta que significa....
      */
+
+
+     //somador do valor de logaritmos
     static int codigo2(int[] vetor) {
         int contador = 0;
         for (int k = (vetor.length - 1); k > 0; k /= 2) {
@@ -59,6 +68,7 @@ public class App {
             }
 
         }
+        operacoes = contador;
         return contador;
     }
 
@@ -66,10 +76,14 @@ public class App {
      * Código de teste 3. Este método...
      * @param vetor Vetor com dados para teste.
      */
+
+     //algoritmo de ordenação por seleção
     static void codigo3(int[] vetor) {
-        for (int i = 0; i < vetor.length - 1; i++) {
+        operacoes = 0;
+        for(int i = 0; i < vetor.length - 1; i++) {
             int menor = i;
             for (int j = i + 1; j < vetor.length; j++) {
+                operacoes++;
                 if (vetor[j] < vetor[menor])
                     menor = j;
             }
@@ -84,11 +98,18 @@ public class App {
      * @param n Ponto inicial do algoritmo
      * @return Um inteiro que significa...
      */
+
+     //fibonacci recursivo
     static int codigo4(int n) {
-        if (n <= 2)
+        operacoes = 0;
+        if (n <= 2){
+            operacoes++;
             return 1;
-        else
+        }
+        else{
+            operacoes += 2;
             return codigo4(n - 1) + codigo4(n - 2);
+        }
     }
 
     /**
@@ -96,6 +117,8 @@ public class App {
      * @param tamanho Tamanho do vetor a ser criado.
      * @return Vetor com dados aleatórios, com valores entre 1 e (tamanho/2), desordenado.
      */
+
+
     static int[] gerarVetor(int tamanho){
         int[] vetor = new int[tamanho];
         for (int i = 0; i < tamanho; i++) {
@@ -104,7 +127,23 @@ public class App {
         return vetor;
         
     }
+
+    public static void marcarTempo(int[] vetor){
+        long inicio = System.nanoTime();
+        codigo1(vetor);
+        duracao = (System.nanoTime() - inicio) * nanoToMilli;
+    }
+
+    public static String executarTeste(int[] vetor){
+            marcarTempo(vetor);
+            return String.format("Tamanho: %,2d | Operações: %,2d | Tempo: %,2f ms",
+            vetor.length, operacoes, duracao);
+    }
     public static void main(String[] args) {
-        
+        int[] tamanhosTeste = tamanhosTesteMedio;
+        for(int i = 0; i < tamanhosTeste.length; i++){
+            int[] vetorDados = gerarVetor(tamanhosTeste[i]);
+            System.out.println(executarTeste(vetorDados));
+        }
     }
 }

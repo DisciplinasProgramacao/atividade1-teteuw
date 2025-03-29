@@ -14,7 +14,7 @@ public class Insercao<T extends Comparable<T>> implements IOrdenador<T>{
         int tamanho = copiaDados.length;
         comparacoes = movimentacoes = 0;
         inicio = LocalDateTime.now();
-        for(int posReferencia = tamanho - 1; posReferencia > 0; posReferencia--){
+        for(int posReferencia = 1; posReferencia <= tamanho - 1; posReferencia++){
             T valor = copiaDados[posReferencia];
             int j = posReferencia - 1;
             comparacoes++;

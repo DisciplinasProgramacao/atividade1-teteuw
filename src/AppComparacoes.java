@@ -19,6 +19,7 @@ public class AppComparacoes {
         System.out.printf("Tempo: %,.2f milissegundos\n", algoritmo.getTempoOrdenacao());
         System.out.printf("Comparações: %,d\n", algoritmo.getComparacoes());
         System.out.printf("Movimentações: %,d\n",algoritmo.getMovimentacoes());
+       
         return resp;
     }
 

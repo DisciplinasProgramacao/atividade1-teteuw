@@ -1,3 +1,4 @@
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -8,7 +9,6 @@ public class MergeSort<T extends Comparable<T>> implements IOrdenador<T> {
         private long movimentacoes;
         private LocalDateTime inicio;
         private LocalDateTime termino;
-        private T[] dadosOrdenados;
         
         public MergeSort() {
             comparacoes = 0;
@@ -21,18 +21,19 @@ public class MergeSort<T extends Comparable<T>> implements IOrdenador<T> {
         }
     
 
-        private T[] ordenar(T[] dados, Comparator<T> comparador){
+        public T[] ordenar(T[] dados, Comparator<T> comparador){
+
             T[] novo = Arrays.copyOf(dados, dados.length);
             inicio = LocalDateTime.now();
-            
-            int meio = (inicio+fim)/2;
-            int indice1 = inicio;
+            int fim = novo.length;
+            int meio = novo.length/2;
+            int indice1 = 0;
             int indice2 = meio+1;
-            int pos = inicio;
+            int pos = 0;
             while(indice1 <= meio && indice2 <= fim){
                 comparacoes++;
                 
-                if(dados[indice1].compareTo(dados[indice2]) <=0)
+                if(comparador.compare(dados[indice1], (dados[indice2])) <=0)
                     novo[pos] = dados[indice1++];
                 else
                     novo[pos] = dados[indice2++];
@@ -52,6 +53,22 @@ public class MergeSort<T extends Comparable<T>> implements IOrdenador<T> {
                 novo[pos++] = dados[i];
                 movimentacoes++;
             }
+            termino = LocalDateTime.now();
             return novo;
+        }
+
+        @Override
+        public long getComparacoes() {
+            return comparacoes;
+        }
+
+        @Override
+        public long getMovimentacoes() {
+            return movimentacoes;
+        }
+
+        @Override
+        public double getTempoOrdenacao() {
+            return  Duration.between(inicio, termino).toMillis();
         }
 }

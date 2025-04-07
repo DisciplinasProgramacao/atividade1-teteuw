@@ -172,7 +172,7 @@ public class AppOficina {
         int ordenacao = exibirMenuCriterioOrdenacao();
 
         switch (opcao) {
-            case 1 -> ordenador = new Bubblesort<>();
+            case 1 -> ordenador = new BubbleSort<>();
             case 2 -> ordenador = new InsertSort<>();
         }
         switch (ordenacao) {
